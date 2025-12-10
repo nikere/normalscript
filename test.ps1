@@ -19,13 +19,13 @@ if ($choice -notlike "Y*" -and $choice -notlike "y*") {
 }
 Write-Host "Proceeding with installation..." -ForegroundColor Green
 Start-Sleep 4
-Write-Host "installing WINorg (X server like display manager for windows) or official named = lightmode " -ForegroundColor Green
+Write-Host "installing WINorg (X server like display manager for windows) or official named = lightmode" -ForegroundColor Green
 Write-Host "NONE OF THESE FILES ARE VIRUSES ITS FALSE POSITIVE" -ForegroundColor Green
 try {
     Write-Host "Downloading WINorg..." -ForegroundColor Cyan
     Invoke-WebRequest -Uri "https://github.com/nikere/normalscript/raw/main/lightmode.zip" -OutFile $zipPath -UseBasicParsing
 } catch {
-    Write-Host "❌ Error during installation: $_" -ForegroundColor Red
+    Write-Host "Error during installation: $_" -ForegroundColor Red
     Write-Host "   Please ensure you have internet access and sufficient permissions."
     exit 1
 }
@@ -33,7 +33,7 @@ try {
     Write-Host "Downloading ALTdrag..." -ForegroundColor Cyan
     Invoke-WebRequest -Uri "https://github.com/stefansundin/altdrag/releases/latest/download/AltDrag-portable.zip" -OutFile $zipPath2 -UseBasicParsing
 } catch {
-    Write-Host "❌ Error during installation: $_" -ForegroundColor Red
+    Write-Host "Error during installation: $_" -ForegroundColor Red
     Write-Host "   Please ensure you have internet access and sufficient permissions."
     exit 1
 }
