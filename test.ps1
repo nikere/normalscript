@@ -10,6 +10,7 @@ if (-not $isAdmin) {
     Write-Host "   Consider re-running this script 'As Administrator' if installation fails."
     Start-Sleep -Seconds 3
 }
+try {
 Write-Host "Greetings, $Target!" -ForegroundColor Magenta
 Write-Host "WARNING THIS PS1 SCRIPT WILL INSTALL SOME programs in your PC" -ForegroundColor DarkRed
 $choice = Read-Host "Do you want to continue? (Y/N)"
@@ -29,6 +30,7 @@ try {
     Write-Host "   Please ensure you have internet access and sufficient permissions."
     exit 1
 }
+Start-Sleep 1
 try {
     Write-Host "Downloading ALTdrag..." -ForegroundColor Cyan
     Invoke-WebRequest -Uri "https://github.com/stefansundin/altdrag/releases/latest/download/AltDrag-portable.zip" -OutFile $zipPath2 -UseBasicParsing
@@ -37,7 +39,7 @@ try {
     Write-Host "   Please ensure you have internet access and sufficient permissions."
     exit 1
 }
-Start-Sleep 2
+Start-Sleep 5
 Write-Host "Extracting to $InstallDir..." -ForegroundColor Cyan
 if (Test-Path $InstallDir) { Remove-Item -Recurse -Force $InstallDir }
 Expand-Archive -Path $ZipPath -DestinationPath $InstallDir -Force
@@ -51,3 +53,10 @@ if ($choice -notlike "Y*" -and $choice -notlike "y*") {
 }
 Write-Host "Launching $AppName..." -ForegroundColor Green
 PowerShell -NoProfile -ExecutionPolicy Bypass -File "$InstallDir/lightmode/lightmode.exe"
+} catch {
+    Write-Host "`n🛑 UNEXPECTED ERROR:" -ForegroundColor Red
+    Write-Host $_.Exception.Message -ForegroundColor Yellow
+    Write-Host "`nPress Enter to close..." -ForegroundColor Cyan
+    Read-Host
+    exit 1
+}
