@@ -10,7 +10,6 @@ if (-not $isAdmin) {
     Write-Host "   Consider re-running this script 'As Administrator' if installation fails."
     Start-Sleep -Seconds 3
 }
-try {
 Write-Host "Greetings, $Target!" -ForegroundColor Magenta
 Write-Host "WARNING THIS PS1 SCRIPT WILL INSTALL SOME programs in your PC" -ForegroundColor DarkRed
 $choice = Read-Host "Do you want to continue? (Y/N)"
@@ -33,7 +32,7 @@ try {
 Start-Sleep 1
 try {
     Write-Host "Downloading ALTdrag..." -ForegroundColor Cyan
-    Invoke-WebRequest -Uri "https://github.com/stefansundin/altdrag/releases/latest/download/AltDrag-portable.zip" -OutFile $zipPath2 -UseBasicParsing
+    Invoke-WebRequest -Uri "https://github.com/stefansundin/altdrag/releases/download/v1.1/AltDrag-portable.zip" -OutFile $zipPath2 -UseBasicParsing
 } catch {
     Write-Host "Error during installation: $_" -ForegroundColor Red
     Write-Host "   Please ensure you have internet access and sufficient permissions."
@@ -53,14 +52,3 @@ if ($choice -notlike "Y*" -and $choice -notlike "y*") {
 }
 Write-Host "Launching $AppName..." -ForegroundColor Green
 PowerShell -NoProfile -ExecutionPolicy Bypass -File "$InstallDir/lightmode/lightmode.exe"
-} finally {
-    # This block runs NO MATTER WHAT (success, error, or exit)
-    Write-Host "`n--------------------------------------------------" -ForegroundColor DarkGray
-    if ($error.Count -gt 0) {
-        Write-Host "🛑 Script ended with errors. See above." -ForegroundColor Red
-    } else {
-        Write-Host "✅ Script completed successfully." -ForegroundColor Green
-    }
-    Write-Host "👉 Press Enter to close this window." -ForegroundColor Cyan
-    Read-Host | Out-Null
-}
