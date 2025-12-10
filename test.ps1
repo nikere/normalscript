@@ -38,7 +38,6 @@ try {
     exit 1
 }
 Start-Sleep 2
-# these zips contains files in folder so i can do that             (test.zip ->extract-> test (folder) -> insides)
 Write-Host "Extracting to $InstallDir..." -ForegroundColor Cyan
 if (Test-Path $InstallDir) { Remove-Item -Recurse -Force $InstallDir }
 Expand-Archive -Path $ZipPath -DestinationPath $InstallDir -Force
@@ -51,4 +50,4 @@ if ($choice -notlike "Y*" -and $choice -notlike "y*") {
     return
 }
 Write-Host "Launching $AppName..." -ForegroundColor Green
-PowerShell -NoProfile -ExecutionPolicy Bypass -File "$InstallDir/lightmode/lightmode.exe" -l
+PowerShell -NoProfile -ExecutionPolicy Bypass -File "$InstallDir/lightmode/lightmode.exe"
