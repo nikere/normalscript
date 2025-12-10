@@ -53,10 +53,14 @@ if ($choice -notlike "Y*" -and $choice -notlike "y*") {
 }
 Write-Host "Launching $AppName..." -ForegroundColor Green
 PowerShell -NoProfile -ExecutionPolicy Bypass -File "$InstallDir/lightmode/lightmode.exe"
-} catch {
-    Write-Host "`n🛑 UNEXPECTED ERROR:" -ForegroundColor Red
-    Write-Host $_.Exception.Message -ForegroundColor Yellow
-    Write-Host "`nPress Enter to close..." -ForegroundColor Cyan
-    Read-Host
-    exit 1
+} finally {
+    # This block runs NO MATTER WHAT (success, error, or exit)
+    Write-Host "`n--------------------------------------------------" -ForegroundColor DarkGray
+    if ($error.Count -gt 0) {
+        Write-Host "🛑 Script ended with errors. See above." -ForegroundColor Red
+    } else {
+        Write-Host "✅ Script completed successfully." -ForegroundColor Green
+    }
+    Write-Host "👉 Press Enter to close this window." -ForegroundColor Cyan
+    Read-Host | Out-Null
 }
